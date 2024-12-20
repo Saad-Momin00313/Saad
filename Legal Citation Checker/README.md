@@ -109,6 +109,3 @@ Mabo v Queensland (No 2) [1992] HCA 23
 - Google Generative AI
 - python-dotenv
 
-## 📦 Installation
-
-[... rest of the previous README remains the same ...]
