@@ -11,10 +11,10 @@ MultiDoc Redaction Assistant is an advanced document redaction tool leveraging A
 - Comprehensive redaction reporting
 
 ## Inputs
--input .txt,.docx,.pdf file  for the redaction
+- .txt,.docx,.pdf file  for the redaction
 
 ## Output
--output redact fie 
+- redacted fie 
 
 
 ## Installation
