@@ -153,14 +153,26 @@ BENEFITS:
         """Generate personalized insights using AI based on user's progress data."""
         try:
             # Get user's goals
-            goals = self.db.get_practice_goals(stats.get('user_id'))
+            goals = self.db.get_practice_goals(stats.get('user_id')) or {
+                'daily_goal': 10,
+                'weekly_goal': 70,
+                'focus_areas': [],
+                'difficulty_level': 'Beginner'
+            }
             
             # Calculate goal completion rates
             daily_completion = (stats.get('minutes_today', 0) / goals['daily_goal']) * 100
             weekly_completion = (stats.get('minutes_this_week', 0) / goals['weekly_goal']) * 100
             
             # Analyze practice patterns
-            practice_times = [p['timestamp'] for p in practice_data]
+            practice_times = []
+            for date, minutes in practice_data:
+                try:
+                    dt = datetime.strptime(date, "%Y-%m-%d")
+                    practice_times.append(dt)
+                except (ValueError, TypeError):
+                    continue
+            
             preferred_times = []
             if practice_times:
                 hours = [t.hour for t in practice_times]
@@ -228,7 +240,12 @@ BENEFITS:
         """Generate personalized daily practice recommendation based on time of day and user data."""
         try:
             # Get user's practice goals and progress
-            goals = self.db.get_practice_goals(user_profile.get('user_id'))
+            goals = self.db.get_practice_goals(user_profile.get('user_id')) or {
+                'daily_goal': 10,
+                'weekly_goal': 70,
+                'focus_areas': [],
+                'difficulty_level': 'Beginner'
+            }
             progress = self.db.get_user_stats(user_profile.get('user_id'))
             
             # Calculate remaining daily and weekly goals
@@ -336,7 +353,7 @@ You are not alone. Help is available 24/7, and people care about you.
 Please talk to someone right now."""
                 },
                 'heart': {
-                    'message': """🚨 MEDICAL EMERGENCY WARNING:
+                    'message': """�� MEDICAL EMERGENCY WARNING:
 
 If you're experiencing:
 - Chest pain or pressure
@@ -408,63 +425,3 @@ Do not delay seeking medical help. Minutes matter in heart-related emergencies."
             3. Call National Suicide Prevention Lifeline: 988
             
             Your safety and wellbeing are the top priority.""" 
-
-class PracticeRoutine:
-    def __init__(self, name, steps, duration=None, category=None, description=None):
-        self.name = name
-        self.steps = steps
-        self.duration = duration or sum([step.get('duration', 5) for step in steps])
-        self.category = category or "Custom"
-        self.description = description or f"Custom routine: {name}"
-        self.created_at = datetime.now()
-        self.last_practiced = None
-        self.practice_count = 0
-
-    def add_step(self, step_description, duration=5):
-        step = {
-            'description': step_description,
-            'duration': duration
-        }
-        self.steps.append(step)
-        self.duration = sum([s.get('duration', 5) for s in self.steps])
-
-    def remove_step(self, index):
-        if 0 <= index < len(self.steps):
-            removed = self.steps.pop(index)
-            self.duration = sum([s.get('duration', 5) for s in self.steps])
-            return removed
-        return None
-
-    def get_all_steps(self):
-        return self.steps
-
-    def mark_completed(self):
-        self.last_practiced = datetime.now()
-        self.practice_count += 1
-
-    def to_dict(self):
-        return {
-            'name': self.name,
-            'steps': self.steps,
-            'duration': self.duration,
-            'category': self.category,
-            'description': self.description,
-            'created_at': self.created_at.isoformat(),
-            'last_practiced': self.last_practiced.isoformat() if self.last_practiced else None,
-            'practice_count': self.practice_count
-        }
-
-    @classmethod
-    def from_dict(cls, data):
-        routine = cls(
-            name=data['name'],
-            steps=data['steps'],
-            duration=data['duration'],
-            category=data['category'],
-            description=data['description']
-        )
-        routine.created_at = datetime.fromisoformat(data['created_at'])
-        if data['last_practiced']:
-            routine.last_practiced = datetime.fromisoformat(data['last_practiced'])
-        routine.practice_count = data['practice_count']
-        return routine 
