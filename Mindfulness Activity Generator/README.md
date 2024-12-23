@@ -1,77 +1,60 @@
-# Smart Expense Tracker
+# Mindful Moments
 
-## Overview
-The Smart Expense Tracker is a web application built using Streamlit that helps users manage their finances by tracking expenses, setting budgets, and providing insights into spending habits. The application integrates AI features to suggest categories for expenses and generate financial insights.
+A Streamlit-based mindfulness application that provides personalized meditation and mindfulness activities using Google's Gemini AI.
 
 ## Features
-- **Dashboard**: View key financial metrics and visualizations of spending trends.
-- **Add Expense**: Input new expenses with optional AI category suggestions.
-- **View Expenses**: Analyze past expenses with filtering options.
-- **Budget Management**: Set and manage monthly budgets for different categories.
-- **AI Insights**: Generate insights and alerts based on spending patterns and budget usage.
 
-## Installation
-To run the Smart Expense Tracker, follow these steps:
+- 🧘 Personalized mindfulness activities based on mood and energy levels
+- 📊 Progress tracking with interactive visualizations
+- 🎯 Custom practice routines and goals
+- 📈 Mood and energy level tracking
+- ⚡ Quick stress relief practices
+- 🌙 Sleep improvement recommendations
+
+## Setup
 
 1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd <repository-directory>
-   ```
+```bash
+git clone <your-repo-url>
+cd mindfull
+```
 
-2. Install the required packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
+2. Create a virtual environment and activate it:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-3. Set up the database and AI insights configurations as needed.
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-4. Run the application:
-   ```bash
-   streamlit run budget_tracker/main.py
-   ```
+4. Create a `.env` file with your Gemini API key:
+```
+GEMINI_API_KEY=your_api_key_here
+```
 
-## Input
-The application accepts the following inputs:
-
-- **Add Expense Section**:
-  - **Date**: Date of the expense (default is the current date).
-  - **Amount**: Amount spent (must be a positive number).
-  - **Description**: A brief description of the expense.
-  - **Category**: Category of the expense (suggested by AI if enabled).
-
-- **Budget Management Section**:
-  - **Category**: Category for which the budget is being set.
-  - **Monthly Budget**: The limit for spending in the selected category (must be greater than zero).
-
-## Output
-The application provides the following outputs:
-
-- **Dashboard**:
-  - Total Spending
-  - Average Transaction Amount
-  - Total Number of Transactions
-  - Monthly Spending Trends (line chart)
-  - Spending by Category (pie chart)
-  - Budget Alerts with progress bars indicating budget usage.
-
-- **View Expenses Section**:
-  - Total Expenses for the selected period.
-  - Average Expense for the selected period.
-  - Detailed table of expenses including date, category, amount, and description.
-  - Daily Spending Trend (line chart).
-  - Spending Distribution by Category (pie chart).
-
-- **AI Insights Section**:
-  - AI-generated insights based on spending data.
-  - Budget alerts based on spending patterns.
+5. Run the application:
+```bash
+streamlit run main.py
+```
 
 ## Usage
-1. Navigate through the sidebar to select different sections of the application.
-2. Use the "Add Expense" section to input new expenses.
-3. View your spending history and analyze it in the "View Expenses" section.
-4. Set monthly budgets in the "Budget Management" section.
-5. Access AI insights to understand your financial habits better.
+
+1. **Quick Practice**: Select your current mood, energy level, and available time to get a personalized mindfulness activity.
+2. **Progress Tracking**: View your practice statistics and trends in the Progress tab.
+3. **Settings**: Customize your practice goals and preferences in the Settings tab.
+
+## Requirements
+
+- Python 3.8+
+- Streamlit
+- Plotly
+- Pandas
+- Google Generative AI
+- Python-dotenv
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+MIT License
