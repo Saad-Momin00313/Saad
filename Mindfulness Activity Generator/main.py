@@ -1,29 +1,10 @@
 import streamlit as st
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 import pandas as pd
-import calendar
-import numpy as np
 
-from activity_generator import MindfulnessActivityGenerator, PracticeRoutine
-from visualizations import (
-    create_mood_chart, create_practice_heatmap, create_progress_chart,
-    create_activity_flow_diagram, create_sequence_diagram, create_practice_guide,
-    create_body_scan_visualization, create_meditation_timer
-)
-
-def create_routine():
-    name = input("Enter routine name: ")
-    steps = []
-    
-    print("Enter steps (one per line, press Enter twice to finish):")
-    while True:
-        step = input()
-        if step == "":
-            break
-        steps.append(step)
-    
-    return PracticeRoutine(name, steps)
+from activity_generator import MindfulnessActivityGenerator
+from visualizations import create_mood_chart, create_practice_heatmap
 
 def main():
     st.set_page_config(
